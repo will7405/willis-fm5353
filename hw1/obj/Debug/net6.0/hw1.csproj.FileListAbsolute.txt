@@ -1,0 +1,15 @@
+/home/willispc/Documents/fm5353/hw1/bin/Debug/net6.0/hw1
+/home/willispc/Documents/fm5353/hw1/bin/Debug/net6.0/hw1.deps.json
+/home/willispc/Documents/fm5353/hw1/bin/Debug/net6.0/hw1.runtimeconfig.json
+/home/willispc/Documents/fm5353/hw1/bin/Debug/net6.0/hw1.dll
+/home/willispc/Documents/fm5353/hw1/bin/Debug/net6.0/ref/hw1.dll
+/home/willispc/Documents/fm5353/hw1/bin/Debug/net6.0/hw1.pdb
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.csproj.AssemblyReference.cache
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.GeneratedMSBuildEditorConfig.editorconfig
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.AssemblyInfoInputs.cache
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.AssemblyInfo.cs
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.csproj.CoreCompileInputs.cache
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.dll
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/ref/hw1.dll
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.pdb
+/home/willispc/Documents/fm5353/hw1/obj/Debug/net6.0/hw1.genruntimeconfig.cache
