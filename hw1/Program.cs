@@ -14,96 +14,9 @@ namespace MyApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        // Hi grader, run this function to test the implementation. 
+        public static void ForGrader()
         {
-            // string startMessage = 
-            //     @"Choose one of the following:
-            //     0 for Standard Monte-Carl0
-            //     1 for Antithetic Monte-Carlo
-            //     2 for Quasi-Monte-Carlo using Van der Corput";
-
-            // Console.WriteLine(startMessage);
-
-            // try
-            // {
-            //     string input = Console.ReadLine();
-            //     Console.Write("Enter Stock Price: ");
-            //     string stockPrice = Console.ReadLine();
-            //     Console.Write("Enter Strike: ");
-            //     string strike = Console.ReadLine();
-            //     Console.Write("Enter Tenor: ");
-            //     string tenor = Console.ReadLine();
-            //     Console.Write("Enter Volatility: ");
-            //     string vol = Console.ReadLine();
-            //     Console.Write("Enter Risk-Free Rate: ");
-            //     string rate = Console.ReadLine();
-            //     Console.Write("Is the option a call? (Enter \"true\" or \"false\"): ");
-            //     string isCall = Console.ReadLine();
-            //     Console.Write("Enter the number of trials: ");
-            //     string n = Console.ReadLine();
-
-            //     if (int.Parse(input) == 0) 
-            //     {
-            //         MonteCarloStandard mc = new MonteCarloStandard()
-            //         {
-            //             StockPrice = double.Parse(stockPrice), 
-            //             Strike = double.Parse(strike),
-            //             Tenor = double.Parse(tenor),
-            //             Vol = double.Parse(vol),
-            //             Rate = double.Parse(rate),
-            //             isCall = bool.Parse(isCall),
-            //         };
-                
-            //         mc.PrintOptionInfo();
-            //     }
-            //     else if (int.Parse(input) == 1)
-            //     {
-            //         MonteCarloAntithetic mc = new MonteCarloAntithetic()
-            //         {
-            //             StockPrice = double.Parse(stockPrice), 
-            //             Strike = double.Parse(strike),
-            //             Tenor = double.Parse(tenor),
-            //             Vol = double.Parse(vol),
-            //             Rate = double.Parse(rate),
-            //             isCall = bool.Parse(isCall),
-            //         };
-                
-            //         mc.PrintOptionInfo();
-            //     }
-            //     else if (int.Parse(input) == 2)
-            //     {   
-            //         Console.Write("Enter a base: ");
-            //         string baseNumber = Console.ReadLine();
-            //         QuasiMonteCarlo mc = new QuasiMonteCarlo()
-            //         {
-            //             StockPrice = double.Parse(stockPrice), 
-            //             Strike = double.Parse(strike),
-            //             Tenor = double.Parse(tenor),
-            //             Vol = double.Parse(vol),
-            //             Rate = double.Parse(rate),
-            //             isCall = bool.Parse(isCall),
-            //         };
-            //         mc.PrintOptionInfo(Int32.Parse(n), Int32.Parse(baseNumber));
-
-            //     }
-            //     else
-            //     {
-            //         Console.WriteLine("Try again");
-            //     }
-
-                
-            // } 
-            // catch (Exception e) {
-            //     Console.WriteLine("There was an error with your inputs, try again.");
-            // }
-
-            // Good test numbers
-            // StockPrice = 60, 
-            // Strike = 40,
-            // Tenor = 1,
-            // Vol = 0.4,
-            // Rate = 0.05
-            
             MonteCarloStandard mc = new MonteCarloStandard()
             {
                 StockPrice = 60,
@@ -133,6 +46,16 @@ namespace MyApp
                 Rate = 0.05,
                 isCall = true,
             };
+
+            MonteCarloAntitheticCV mc_anti_cv = new MonteCarloAntitheticCV()
+            {
+                StockPrice = 60,
+                Strike = 40,
+                Tenor = 1,
+                Vol = 0.4,
+                Rate = 0.05,
+                isCall = true,
+            };
             
             int trials = 10000;
             int steps = 252;
@@ -141,11 +64,142 @@ namespace MyApp
             double[] pair1 = mc.SimulateOptionPrice(trials, steps, seed);
             double[] pair2 = mc_anti.SimulateOptionPrice(trials, steps, seed);
             double[] pair3 = mc_cv.SimulateOptionPrice(trials, steps, seed);
-            Console.WriteLine("{0}, {1}", pair1[0], pair1[1]);
-            Console.WriteLine("{0}, {1}", pair2[0], pair2[1]);
-            Console.WriteLine("{0}, {1}", pair3[0], pair3[1]);
+            double[] pair4 = mc_anti_cv.SimulateOptionPrice(trials, steps, seed);
+            Console.WriteLine("Price and Standard Error");
+            Console.WriteLine("No Variance Reduction: {0}, {1}", pair1[0], pair1[1]);
+            Console.WriteLine("Antithetic Only: {0}, {1}", pair2[0], pair2[1]);
+            Console.WriteLine("Control Variate Only: {0}, {1}", pair3[0], pair3[1]);
+            Console.WriteLine("Antithetic AND CV: {0}, {1}", pair4[0], pair4[1]);
+        }
+
+        public static void RunConsoleApp()
+        {
+            string startMessage = 
+                @"Choose one of the following:
+                0 for Standard Monte-Carl0
+                1 for Antithetic Monte-Carlo
+                2 for Quasi-Monte-Carlo using Van der Corput
+                3 for Control Variate Monte-Carlo
+                4 for Antithetic and Control Variate Monte-Carlo";
 
 
+            Console.WriteLine(startMessage);
+
+            try
+            {
+                string input = Console.ReadLine();
+                Console.Write("Enter Stock Price: ");
+                string stockPrice = Console.ReadLine();
+                Console.Write("Enter Strike: ");
+                string strike = Console.ReadLine();
+                Console.Write("Enter Tenor: ");
+                string tenor = Console.ReadLine();
+                Console.Write("Enter Volatility: ");
+                string vol = Console.ReadLine();
+                Console.Write("Enter Risk-Free Rate: ");
+                string rate = Console.ReadLine();
+                Console.Write("Is the option a call? (Enter \"true\" or \"false\"): ");
+                string isCall = Console.ReadLine();
+                Console.Write("Enter the number of trials: ");
+                string n = Console.ReadLine();
+
+                if (int.Parse(input) == 0) 
+                {
+                    MonteCarloStandard mc = new MonteCarloStandard()
+                    {
+                        StockPrice = double.Parse(stockPrice), 
+                        Strike = double.Parse(strike),
+                        Tenor = double.Parse(tenor),
+                        Vol = double.Parse(vol),
+                        Rate = double.Parse(rate),
+                        isCall = bool.Parse(isCall),
+                    };
+                
+                    mc.PrintOptionInfo();
+                }
+                else if (int.Parse(input) == 1)
+                {
+                    MonteCarloAntithetic mc = new MonteCarloAntithetic()
+                    {
+                        StockPrice = double.Parse(stockPrice), 
+                        Strike = double.Parse(strike),
+                        Tenor = double.Parse(tenor),
+                        Vol = double.Parse(vol),
+                        Rate = double.Parse(rate),
+                        isCall = bool.Parse(isCall),
+                    };
+                
+                    mc.PrintOptionInfo();
+                }
+                else if (int.Parse(input) == 2)
+                {   
+                    Console.Write("Enter a base: ");
+                    string baseNumber = Console.ReadLine();
+                    QuasiMonteCarlo mc = new QuasiMonteCarlo()
+                    {
+                        StockPrice = double.Parse(stockPrice), 
+                        Strike = double.Parse(strike),
+                        Tenor = double.Parse(tenor),
+                        Vol = double.Parse(vol),
+                        Rate = double.Parse(rate),
+                        isCall = bool.Parse(isCall),
+                    };
+                    mc.PrintOptionInfo(Int32.Parse(n), Int32.Parse(baseNumber));
+
+                }
+                else if (int.Parse(input) == 3)
+                {
+                    MonteCarloCV mc = new MonteCarloCV()
+                    {
+                        StockPrice = double.Parse(stockPrice), 
+                        Strike = double.Parse(strike),
+                        Tenor = double.Parse(tenor),
+                        Vol = double.Parse(vol),
+                        Rate = double.Parse(rate),
+                        isCall = bool.Parse(isCall),
+                    };
+                
+                    mc.PrintOptionInfo();
+                }
+                else if (int.Parse(input) == 4)
+                {
+                    MonteCarloAntitheticCV mc = new MonteCarloAntitheticCV()
+                    {
+                        StockPrice = double.Parse(stockPrice), 
+                        Strike = double.Parse(strike),
+                        Tenor = double.Parse(tenor),
+                        Vol = double.Parse(vol),
+                        Rate = double.Parse(rate),
+                        isCall = bool.Parse(isCall),
+                    };
+                
+                    mc.PrintOptionInfo();
+                }
+                else
+                {
+                    Console.WriteLine("Try again");
+                }
+
+                
+            } 
+            catch (Exception e) {
+                Console.WriteLine("There was an error with your inputs, try again.");
+            }
+
+            // Good test numbers
+            // StockPrice = 60, 
+            // Strike = 40,
+            // Tenor = 1,
+            // Vol = 0.4,
+            // Rate = 0.05
+        }
+
+        static void Main(string[] args)
+        {
+            // Run ForGrader to see a premade test for your validation
+            ForGrader();
+
+            RunConsoleApp();
             // mc_anti.PrintOptionInfo();
         }
     }
@@ -410,15 +464,82 @@ namespace MyApp
             for (int j = 0; j < trials-1; j++) 
             {
                 double St = StockPrice;
+                double cv = 0;
 
                 for(int i = 0; i < steps; i++)
                 {
                     double t = i*dt;
+                    double delta = BlackScholes.BlackScholesDelta(St, Strike, Tenor - t, Rate, Vol, isCall);
                     double Stn = St*Math.Exp(nudt + sigsdt * samples[j,i]);
+                    cv += delta*(Stn-St*erddt);
                     St = Stn;
                 }
                 
-                double CT = payoff(St, Strike);
+                double CT = payoff(St, Strike) + beta*cv;
+                sum_CT += CT;
+                sum_CT2 += Math.Pow(CT,2);
+            }
+            
+            double option_value = Math.Exp(-Rate*Tenor) * (sum_CT / trials); 
+            double SD = Math.Sqrt( ( sum_CT2 - sum_CT*sum_CT/trials ) * Math.Exp(-2*Rate*Tenor) / (trials - 1) );
+            double SE = SD / Math.Sqrt(trials);
+
+            return new double[] {option_value, SE};
+        }
+    }
+
+    class MonteCarloAntitheticCV : MonteCarlo
+    {
+        delegate double PayoffFunction(double ST, double K);
+
+        public override double[] SimulateOptionPrice(int trials, int steps, int seed)
+        {
+            // public double StockPrice {get; set;}
+            // public double Strike {get; set;}
+            // public double Tenor {get; set;}
+            // public double Vol {get; set;}
+            // public double Rate {get; set;}
+
+            // Generate a matrix of normal random samples
+            
+            PayoffFunction payoff = isCall ? (double ST, double K) => Math.Max(ST - K, 0) : (double ST, double K) => Math.Max(K - ST, 0);
+
+            NormalRandom rand = new NormalRandom(seed);
+            double dt = Tenor/steps;
+            double nudt = (Rate - 0.5 * Math.Pow(Vol,2))*dt;
+            double sigsdt = Vol * Math.Sqrt(dt);
+            double erddt = Math.Exp(Rate*dt);
+
+            int beta = -1;
+
+            double sum_CT = 0;
+            double sum_CT2 = 0;
+
+            double[,] samples = rand.Normal(0, 1, trials, steps+1);
+            
+            for (int j = 0; j < trials-1; j++) 
+            {
+                double St1 = StockPrice;
+                double St2 = StockPrice;
+                double cv1 = 0;
+                double cv2 = 0;
+
+                for(int i = 0; i < steps; i++)
+                {
+                    double t = i*dt;
+                    double delta1 = BlackScholes.BlackScholesDelta(St1, Strike, Tenor - t, Rate, Vol, isCall);
+                    double delta2 = BlackScholes.BlackScholesDelta(St2, Strike, Tenor - t, Rate, Vol, isCall);
+                    double Stn1 = St1*Math.Exp(nudt + sigsdt * samples[j,i]);
+                    double Stn2 = St2*Math.Exp(nudt - sigsdt * samples[j,i]);
+
+                    cv1 += delta1*(Stn1-St1*erddt);
+                    cv2 += delta2*(Stn2-St2*erddt);
+
+                    St1 = Stn1;
+                    St2 = Stn2;
+                }
+                
+                double CT = 0.5 * ( payoff(St1, Strike) + beta*cv1 + payoff(St2, Strike) + beta*cv2);
                 sum_CT += CT;
                 sum_CT2 += Math.Pow(CT,2);
             }
