@@ -1,2 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+Thread t = new Thread(new ThreadStart(new Action() {
+    Console.WriteLine("Hello World")
+}));
+t.start();
+t.join();
