@@ -201,6 +201,62 @@ namespace MyApp
 
             //RunConsoleApp();
             // mc_anti.PrintOptionInfo();
+            Testing();
+        }
+
+        public static void Testing()
+        {
+            double[][] GenerateScenarios(double StockPrice, double Tenor, double rate, double vol, int trials, int steps, int seed=0)
+            {
+                // Generate a matrix of normal random samples
+                NormalRandom rand = new NormalRandom(seed);
+                double dt = Tenor/steps;
+                double[,] samples = rand.Normal(0, Math.Sqrt(dt), trials, steps+1);
+                
+                double[][] simulation = new double[trials][];
+                
+                // Set first column of the simulation matrix equal to the initial underlying price
+                for (int i = 0; i < trials; i++)
+                {   
+                    simulation[i] = new double[steps+1];
+                    simulation[i][0] = StockPrice;
+                }
+
+                for (int i = 0; i < trials; i++) 
+                {
+                    for(int j = 0; j < steps; j++)
+                    {
+                        simulation[i][j+1] = simulation[i][j] * Math.Exp(((rate - (Math.Pow(vol, 2)/2)) * dt) + (vol * samples[i,j]));
+                    }
+                }
+                return simulation;
+            }
+
+            double[][] GenerateScenarioBatch(double StockPrice, double Tenor, double rate, double vol, int trials, int steps, int batchCount, int seed=0)
+            {
+                return GenerateScenarios(StockPrice, Tenor, rate, vol, trials/batchCount, steps, seed);
+            }
+            
+            double[][][] GenerateScenariosParallel(double StockPrice, double Tenor, double rate, double vol, int trials, int steps, int seed=0)
+            {
+                int numCores = Environment.ProcessorCount;
+                double[][][] Scenarios = new double[numCores][][];
+                Parallel.For(0, numCores, i => Scenarios[i] = GenerateScenarioBatch(StockPrice, Tenor, rate, vol, trials, steps, numCores, seed));
+                return Scenarios;
+            }
+
+            Console.WriteLine("Start");
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var scen = GenerateScenarios(100, 1, 0.05, 0.2, 1000000, 252);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
+            stopwatch.Reset();
+            stopwatch.Start();
+            var scen2 = GenerateScenariosParallel(100, 1, 0.05, 0.2, 1000000, 252);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
         }
     }
 

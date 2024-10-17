@@ -1,0 +1,15 @@
+/home/willispc/Documents/fm5353/hw3/bin/Debug/net6.0/hw3
+/home/willispc/Documents/fm5353/hw3/bin/Debug/net6.0/hw3.deps.json
+/home/willispc/Documents/fm5353/hw3/bin/Debug/net6.0/hw3.runtimeconfig.json
+/home/willispc/Documents/fm5353/hw3/bin/Debug/net6.0/hw3.dll
+/home/willispc/Documents/fm5353/hw3/bin/Debug/net6.0/ref/hw3.dll
+/home/willispc/Documents/fm5353/hw3/bin/Debug/net6.0/hw3.pdb
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.csproj.AssemblyReference.cache
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.GeneratedMSBuildEditorConfig.editorconfig
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.AssemblyInfoInputs.cache
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.AssemblyInfo.cs
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.csproj.CoreCompileInputs.cache
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.dll
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/ref/hw3.dll
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.pdb
+/home/willispc/Documents/fm5353/hw3/obj/Debug/net6.0/hw3.genruntimeconfig.cache
